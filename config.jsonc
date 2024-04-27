@@ -1,103 +1,105 @@
 // -*- mode: jsonc -*-
 {
-    "layer": "top",
-    "height": 1070,
-    "position": "left",
-    "spacing": 4, 
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
     "modules-left": [
-    "hyprland/workspaces"
+        "hyprland/workspaces",
     ],
     "modules-center": [
+        "hyprland/window"
     ],
     "modules-right": [
-	"tray",
-	"keyboard-state",
+        "tray",
+        "hyprland/language",
         "pulseaudio",
         "network",
         "battery",
-        "memory",
-        "temperature",
         "clock",
     ],
+    // Modules configuration
+    // "sway/workspaces": {
+    //     "disable-scroll": true,
+    //     "all-outputs": true,
+    //     "warp-on-scroll": false,
+    //     "format": "{name}: {icon}",
+    //     "format-icons": {
+    //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+    //     }
+    // },
+    "hyprland/workspaces": {
+        "all-outputs": true,
+        "active-only": false,
+}    
+},
+    
     "clock": {
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
-    "hyprland/workspaces": {
-	"all-outputs": true,
-	},
-    "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C",
-    },
-	"keyboard-state": {
-     "numlock": true,
-    	"capslock": true,
-    	"format": "{name} {icon}",
-    	"format-icons": {
-        	"locked": "",
-       		 "unlocked": ""
-    }
-	},
-
     "battery": {
         "states": {
             // "good": 95,
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}",
-        "format-full": "{icon}",
-        "format-charging": "{",
+        "format": "{icon} |",
+        "format-full": "{icon} |",
+        "format-charging": "",
         "format-plugged": "",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },
-    "power-profiles-daemon": {
-      "format": "{icon}",
-      "tooltip-format": "Piwer profile: {profile}\nDriver: {driver}",
-      "tooltip": true,
-      "format-icons": {
-        "default": "",
-        "performance": "",
-        "balanced": "",
-        "power-saver": ""
-      }
-    },
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "",
+        "interface": "wlan0", // (Optional) To force the use of this interface
+        "format-wifi": " |",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
-"pulseaudio": {
-    "format": "{icon}",
-    "format-bluetooth": "{volume}% {icon}",
-    "format-muted": "",
-    "format-icons": {
-        "headphone": "",
-        "hands-free": "",
-        "headset": "",
-        "phone": "",
-        "portable": "",
-        "car": "",
-        "default": ["", ""]
+    "pulseaudio":{
+        // "scroll-step": 1, // %, can be a float
+        "format": "| {icon} {format_source} |",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
     },
-    "scroll-step": 1,
-    "on-click": "pavucontrol",
-    "ignored-sinks": ["Easy Effects Sink"]
-},
-"memory": {
-    "interval": 30,
-    "format": "{}%",
-    "max-length": 10
+    "hyprland/language": {
+        "format-en": "| en",
+        "format-ru": "| ru",
+        "format-by": "| by",
+        "keyboard-name": "pc105"
+        }
+}
+    "hyprland/window": {
+        "format": "{initialClass}",
+    },
+    "separate-outputs": true
 }
 }
+
